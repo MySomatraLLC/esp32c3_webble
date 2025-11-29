@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MySomatra</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-x: hidden;
+    background: #000;
+    color: #fff;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Device Showcase */
+  .device-showcase {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 60px auto;
+    perspective: 1200px;
+    perspective-origin: center center;
+  }
+
+  .device-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 120%;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
+  }
+
+  .device-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(249, 115, 22, 0.3));
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+      0 30px 80px rgba(0, 0, 0, 0.6),
+      0 10px 30px rgba(0, 0, 0, 0.4),
+      inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .device-image::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: linear-gradient(135deg, #7c3aed, #f97316);
+    border-radius: 30px;
+    opacity: 0.3;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 0.6;
+    }
+  }
+
+  .device-screen {
+    position: relative;
+    z-index: 2;
+    width: 70%;
+    height: 70%;
+    background: transparent;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .device-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: productPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.8)) 
+            drop-shadow(0 5px 15px rgba(0, 0, 0, 0.6))
+            drop-shadow(0 0 30px rgba(124, 58, 237, 0.3));
+    transform-style: preserve-3d;
+    border-radius: 15px;
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.7),
+      0 10px 20px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes productPulse {
+    0%, 100% {
+      transform: scale(1) translateZ(0px);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05) translateZ(20px);
+      opacity: 0.95;
+    }
+  }
+
+  /* 3D Lighting Effect */
+  .device-screen::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      rgba(255, 255, 255, 0.15) 0%,
+      transparent 50%
+    );
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 3;
+    mix-blend-mode: overlay;
+  }
+
+  .device-screen::after {
+    content: '';
+    position: absolute;
+    bottom: -5%;
+    right: -5%;
+    width: 110%;
+    height: 110%;
+    background: radial-gradient(
+      ellipse at 70% 80%,
+      rgba(0, 0, 0, 0.4) 0%,
+      transparent 50%
+    );
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* Specs Section */
+  .specs-section {
+    padding: 100px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .spec-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .spec-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .spec-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(124, 58, 237, 0.5);
+  }
+
+  .spec-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .spec-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .spec-desc {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+  }
+
+  /* Slides Section */
+  .slides-section {
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slides-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .slide-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 30px;
+  }
+
+  .slides {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide {
+    min-width: 100%;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(249, 115, 22, 0.2));
+    border-radius: 30px;
+    text-align: center;
+  }
+
+  .slide h3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .slide p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .slide-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator.active {
+    background: #fff;
+    width: 32px;
+    border-radius: 6px;
+  }
+
+  .slide-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .slide-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .slide-nav.prev {
+    left: 20px;
+  }
+
+  .slide-nav.next {
+    right: 20px;
+  }
+
+  /* CTA Button */
+  .cta-section {
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 20px 60px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #000;
+    background: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 1s forwards;
+  }
+
+  .cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(255, 255, 255, 0.3);
+    background: #f0f0f0;
+  }
+
+  .cta-button:active {
+    transform: scale(0.98);
+  }
+
+  /* Background Animation */
+  .bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent);
+    animation: float 20s infinite ease-in-out;
+  }
+
+  .bg-circle:nth-child(1) {
+    width: 500px;
+    height: 500px;
+    top: -200px;
+    left: -200px;
+    animation-delay: 0s;
+  }
+
+  .bg-circle:nth-child(2) {
+    width: 400px;
+    height: 400px;
+    bottom: -150px;
+    right: -150px;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.3), transparent);
+    animation-delay: 5s;
+  }
+
+  .bg-circle:nth-child(3) {
+    width: 300px;
+    height: 300px;
+    top: 50%;
+    right: 10%;
+    animation-delay: 10s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-30px, 30px) scale(0.9);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+    }
+
+    .specs-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .slide-nav {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+
+    .slide-nav.prev {
+      left: 10px;
+    }
+
+    .slide-nav.next {
+      right: 10px;
+    }
+
+    .cta-button {
+      padding: 18px 40px;
+      font-size: 1.1rem;
+    }
+  }
+
+  /* Scroll Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Apple-style Feature Sections */
+  .feature-section {
+    padding: 120px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .feature-header {
+    text-align: center;
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+  }
+
+  .feature-header.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px;
+    line-height: 1.1;
+  }
+
+  .feature-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.01em;
+  }
+
+  .feature-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 80px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s ease-out;
+  }
+
+  .feature-content.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-content.reverse {
+    direction: rtl;
+  }
+
+  .feature-content.reverse > * {
+    direction: ltr;
+  }
+
+  .feature-image {
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(249, 115, 22, 0.2));
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .feature-image::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.3), transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .feature-icon {
+    font-size: 8rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .feature-subtitle {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-description {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-list li {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease-out;
+  }
+
+  .feature-list.active li {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: rgba(124, 58, 237, 0.8);
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  .feature-list li:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .feature-list li:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .feature-list li:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .feature-list li:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+  /* Zoom Feature Section */
+  .zoom-feature {
+    text-align: center;
+    padding: 120px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .zoom-header {
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+  }
+
+  .zoom-header.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .zoom-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px;
+  }
+
+  .zoom-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .zoom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 1.2s ease-out;
+  }
+
+  .zoom-content.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .zoom-image-container {
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(249, 115, 22, 0.2));
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .zoom-icon {
+    font-size: 10rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+    animation: zoomPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes zoomPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  .zoom-description {
+    max-width: 700px;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+  }
+
+  @media (max-width: 968px) {
+    .feature-content {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .feature-content.reverse {
+      direction: ltr;
+    }
+
+    .feature-image {
+      height: 400px;
+    }
+
+    .feature-icon {
+      font-size: 6rem;
+    }
+
+    .zoom-image-container {
+      height: 400px;
+    }
+
+    .zoom-icon {
+      font-size: 7rem;
+    }
+  }
+
+</style>
+</head>
+<body>
+  <div class="bg-animation">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>SOMATRA</h1>
+      <p class="subtitle">Next Generation Wellness<br>Starts Here</p>
+      
+      <div class="device-showcase">
+        <div class="device-container" id="deviceContainer">
+          <div class="device-image">
+            <div class="device-screen">
+              <img src="product.png" alt="SOMATRA Product">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 1: Advanced Neural Stimulation -->
+  <section class="feature-section">
+    <div class="feature-header reveal">
+      <h2 class="feature-title">Advanced Neural Stimulation</h2>
+      <p class="feature-tagline">Unlock your mind's potential.</p>
+    </div>
+    
+    <div class="feature-content reveal">
+      <div class="feature-image">
+        <div class="feature-icon">🧠</div>
+      </div>
+      <div class="feature-text">
+        <h3 class="feature-subtitle">Precision Brain Enhancement</h3>
+        <p class="feature-description">
+          Experience next-generation neural stimulation technology designed to optimize cognitive performance, enhance focus, and support mental wellness through advanced biofeedback mechanisms.
+        </p>
+        <ul class="feature-list">
+          <li>Targeted neural pathway activation</li>
+          <li>Real-time brain activity monitoring</li>
+          <li>Personalized stimulation protocols</li>
+          <li>Non-invasive, safe technology</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 2: Wellness and Health Tracking -->
+  <section class="feature-section">
+    <div class="feature-header reveal">
+      <h2 class="feature-title">Wellness and Health Tracking</h2>
+      <p class="feature-tagline">Take a closer look at your health.</p>
+    </div>
+    
+    <div class="feature-content reverse reveal">
+      <div class="feature-image">
+        <div class="feature-icon">💚</div>
+      </div>
+      <div class="feature-text">
+        <h3 class="feature-subtitle">Comprehensive Health Insights</h3>
+        <p class="feature-description">
+          Monitor your complete wellness profile with advanced sensors that track vital signs, activity levels, sleep patterns, and stress indicators—all in real-time.
+        </p>
+        <ul class="feature-list">
+          <li>24/7 continuous health monitoring</li>
+          <li>Advanced biometric analysis</li>
+          <li>Personalized health recommendations</li>
+          <li>Seamless data synchronization</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature 3: Smart Daily Assistant -->
+  <section class="zoom-feature">
+    <div class="zoom-header reveal">
+      <h2 class="zoom-title">Smart Daily Assistant</h2>
+      <p class="zoom-tagline">A leap forward in daily intelligence.</p>
+    </div>
+    
+    <div class="zoom-content reveal">
+      <div class="zoom-image-container">
+        <div class="zoom-icon">🤖</div>
+      </div>
+      <p class="zoom-description">
+        Your intelligent companion that learns from your patterns, anticipates your needs, and seamlessly integrates into your daily routine. From scheduling optimization to proactive wellness reminders, experience the future of personal assistance.
+      </p>
+    </div>
+  </section>
+
+  <!-- Specs Section -->
+  <section class="specs-section">
+    <h2 style="font-size: 3rem; font-weight: 600; text-align: center; margin-bottom: 20px; opacity: 0;" class="reveal">Powerful Features</h2>
+    <p style="text-align: center; font-size: 1.2rem; color: rgba(255,255,255,0.7); margin-bottom: 40px; opacity: 0;" class="reveal">Everything you need in one device</p>
+    
+    <div class="specs-grid">
+      <div class="spec-card reveal">
+        <span class="spec-icon">📡</span>
+        <div class="spec-title">Wireless Connection</div>
+        <div class="spec-desc">Seamless wireless communication for effortless device control and data transmission from anywhere.</div>
+      </div>
+      
+      <div class="spec-card reveal">
+        <span class="spec-icon">📍</span>
+        <div class="spec-title">Precise GPS Tracking</div>
+        <div class="spec-desc">Advanced GPS technology delivers accurate location tracking and positioning for real-time navigation and monitoring.</div>
+      </div>
+      
+      <div class="spec-card reveal">
+        <span class="spec-icon">⚡</span>
+        <div class="spec-title">Powerful Chip</div>
+        <div class="spec-desc">High-performance processor architecture designed for efficient computing and smooth operation of advanced features.</div>
+      </div>
+      
+      <div class="spec-card reveal">
+        <span class="spec-icon">🔋</span>
+        <div class="spec-title">Long Time Battery Use</div>
+        <div class="spec-desc">Optimized power management ensures extended battery life for continuous operation throughout your day.</div>
+      </div>
+      
+      <div class="spec-card reveal">
+        <span class="spec-icon">💚</span>
+        <div class="spec-title">Real-Time Health Tracking</div>
+        <div class="spec-desc">Monitor your health metrics and activity data in real-time with advanced sensors and intelligent analysis.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slides Section -->
+  <section class="slides-section">
+    <div class="slides-container">
+      <button class="slide-nav prev" onclick="changeSlide(-1)">‹</button>
+      <div class="slide-wrapper">
+        <div class="slides" id="slides">
+          <div class="slide">
+            <h3>Advanced Connectivity</h3>
+            <p>Connect wirelessly via Bluetooth Low Energy. Control your device from anywhere with our intuitive web interface.</p>
+          </div>
+          <div class="slide">
+            <h3>Precise GPS Tracking</h3>
+            <p>Get accurate location data with our integrated GPS module. Perfect for tracking, navigation, and location-based applications.</p>
+          </div>
+          <div class="slide">
+            <h3>Real-time Monitoring</h3>
+            <p>Monitor sensor data, device status, and system metrics in real-time through our comprehensive dashboard.</p>
+          </div>
+          <div class="slide">
+            <h3>Easy Configuration</h3>
+            <p>Simple and intuitive interface for configuring device settings, parameters, and operational modes.</p>
+          </div>
+        </div>
+      </div>
+      <button class="slide-nav next" onclick="changeSlide(1)">›</button>
+      
+      <div class="slide-indicators" id="indicators"></div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <a href="esp32c3_webble_I2C_GPS_new_GUI_stable.html" class="cta-button">USE YOUR SOMATRA</a>
+  </section>
+
+  <script>
+
+    // Device 3D rotation effect
+    const deviceContainer = document.getElementById('deviceContainer');
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    let lastMouseMoveTime = Date.now();
+    
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      lastMouseMoveTime = Date.now();
+    });
+    
+    // Add subtle continuous rotation when mouse is not moving
+    let idleRotation = 0;
+
+    function animate() {
+      const timeSinceMouseMove = Date.now() - lastMouseMoveTime;
+      const isIdle = timeSinceMouseMove > 2000; // 2 seconds of no mouse movement
+      
+      if (isIdle) {
+        // Subtle floating animation when idle
+        idleRotation += 0.3;
+        const idleX = Math.sin(idleRotation * Math.PI / 180) * 12;
+        const idleY = Math.cos(idleRotation * Math.PI / 180) * 8;
+        deviceContainer.style.transform = `rotateY(${idleX}deg) rotateX(${idleY}deg)`;
+      } else {
+        // Follow mouse movement with faster response
+        targetX += (mouseX - targetX) * 0.15;
+        targetY += (mouseY - targetY) * 0.15;
+        deviceContainer.style.transform = `rotateY(${targetX * 40}deg) rotateX(${-targetY * 40}deg)`;
+      }
+      
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Slides functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const slidesContainer = document.getElementById('slides');
+    const indicatorsContainer = document.getElementById('indicators');
+
+    // Create indicators
+    for (let i = 0; i < totalSlides; i++) {
+      const indicator = document.createElement('div');
+      indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+      indicator.onclick = () => goToSlide(i);
+      indicatorsContainer.appendChild(indicator);
+    }
+
+    function updateSlides() {
+      slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.querySelectorAll('.indicator').forEach((ind, i) => {
+        ind.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    function changeSlide(direction) {
+      currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+      updateSlides();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlides();
+    }
+
+    // Auto-play slides
+    setInterval(() => {
+      changeSlide(1);
+    }, 5000);
+
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          
+          // Activate feature list animations when parent is visible
+          const featureList = entry.target.querySelector('.feature-list');
+          if (featureList) {
+            setTimeout(() => {
+              featureList.classList.add('active');
+            }, 300);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all reveal elements
+    document.querySelectorAll('.reveal, .spec-card, .feature-header, .feature-content, .zoom-header, .zoom-content').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Initialize spec cards visibility
+    setTimeout(() => {
+      document.querySelectorAll('.spec-card').forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 100);
+      });
+    }, 500);
+  </script>
+</body>
+</html>
